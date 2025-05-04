@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tra Cứu Can Chi</title>
+</head>
+<body>
+    <h1>Tra Cứu</h1>
+    <form method="POST">
+        <label for="ngay">Ngày:</label>
+        <input type="number" name="ngay" required><br><br>
+
+        <label for="thang">Tháng:</label>
+        <input type="number" name="thang" required><br><br>
+
+        <label for="nam">Năm:</label>
+        <input type="number" name="nam" required><br><br>
+
+        <label for="gioi_tinh">Giới tính:</label>
+        <input type="radio" name="gioi_tinh" value="nam" required> Nam
+        <input type="radio" name="gioi_tinh" value="nu" required> Nữ<br><br>
+
+        <label for="loai_lich">Loại lịch:</label>
+        <input type="radio" name="loai_lich" value="duong" required> Dương lịch
+        <input type="radio" name="loai_lich" value="am" required> Âm lịch<br><br>
+
+        <button type="submit">Tra Cứu</button>
+    </form>
+
+    {% if error %}
+        <p style="color:red;">{{ error }}</p>
+    {% endif %}
+</body>
+</html>
