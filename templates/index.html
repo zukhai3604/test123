@@ -2,92 +2,138 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tra Cứu Can Chi và Quái Mệnh</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Tra cứu Ngày Âm Dương</title>
     <style>
         body {
-            background-color: #f8f9fa;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f8f0e3; /* Màu be nhạt như hình */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
         }
         .container {
-            max-width: 600px;
+            max-width: 500px;
+            background-color: white;
+            padding: 20px; /* Giảm padding một chút */
+            border-radius: 5px; /* Bo tròn góc nhẹ */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Thêm bóng đổ nhẹ */
         }
-        .header {
+        h2 {
             text-align: center;
-            margin-top: 20px;
-            color: #c00;
+            color: #a0522d; /* Màu nâu đỏ cho tiêu đề */
+            margin-bottom: 20px; /* Thêm khoảng cách dưới tiêu đề */
         }
-        .result-box {
-            margin-top: 20px;
-            padding: 20px;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 8px;
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333; /* Màu đen cho label */
+            font-weight: bold; /* In đậm label */
         }
-        .btn-custom {
-            background-color: #c00;
+        input[type="text"], select {
+            width: calc(100% - 12px); /* Điều chỉnh chiều rộng để trừ padding và border */
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box; /* Đảm bảo padding và border không làm tăng kích thước phần tử */
+        }
+        .input-group {
+            display: flex;
+            gap: 10px;
+        }
+        .input-group > div {
+            flex: 1;
+        }
+        .input-group label {
+            margin-top: 0; /* Loại bỏ margin-top cho label trong group */
+        }
+        button {
+            background-color: #d9534f; /* Màu đỏ cho nút */
             color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 15px;
+        }
+        button:hover {
+            background-color: #c9302c;
+        }
+        /* Các style cho result và error giữ nguyên */
+        .result {
+            margin-top: 20px;
+            background: #f0f8ff; /* Màu lightblue nhạt */
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 5px solid #5bc0de; /* Màu xanh dương nhạt */
+        }
+        .error {
+            margin-top: 20px;
+            background: #fdecea; /* Màu đỏ rất nhạt */
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 5px solid #d9534f; /* Màu đỏ */
+            color: #a94442; /* Màu đỏ đậm cho chữ */
         }
     </style>
 </head>
 <body>
+    <div class="container">
+        <h2>🔎 Tra Cứu Can Chi & Quái Mệnh</h2>
+        <form method="post">
+            <label for="sdt">📱 Số điện thoại:</label>
+            <input type="text" name="sdt" value="0886856737" required>
 
-<div class="container">
-    <div class="header">
-        <h2>Tra Cứu Can Chi và Quái Mệnh</h2>
-    </div>
-
-    <form method="POST">
-        <div class="mb-3">
-            <label for="sdt" class="form-label">Số Điện Thoại</label>
-            <input type="text" class="form-control" id="sdt" name="sdt" required>
-        </div>
-        <div class="mb-3">
-            <label for="ngay" class="form-label">Ngày Sinh</label>
-            <input type="number" class="form-control" id="ngay" name="ngay" min="1" max="31" required>
-        </div>
-        <div class="mb-3">
-            <label for="thang" class="form-label">Tháng Sinh</label>
-            <input type="number" class="form-control" id="thang" name="thang" min="1" max="12" required>
-        </div>
-        <div class="mb-3">
-            <label for="nam" class="form-label">Năm Sinh</label>
-            <input type="number" class="form-control" id="nam" name="nam" required>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Giới Tính</label>
-            <div>
-                <input type="radio" id="nam" name="gioi_tinh" value="nam" checked> Nam
-                <input type="radio" id="nu" name="gioi_tinh" value="nu"> Nữ
+            <!-- Thay phần nhập ngày tháng năm bằng đoạn dưới -->
+            <label>📅 Ngày / Tháng / Năm:</label>
+            <div class="input-group">
+                <div>
+                    <label for="ngay">Ngày</label>
+                    <input type="text" name="ngay" value="3" placeholder="dd" required>
+                </div>
+                <div>
+                    <label for="thang">Tháng</label>
+                    <input type="text" name="thang" value="6" placeholder="mm" required>
+                </div>
+                <div>
+                    <label for="nam">Năm</label>
+                    <input type="text" name="nam" value="2004" placeholder="yyyy" required>
+                </div>
             </div>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Loại Lịch</label>
-            <div>
-                <input type="radio" id="duong" name="lich" value="duong" checked> Dương Lịch
-                <input type="radio" id="am" name="lich" value="am"> Âm Lịch
-            </div>
-        </div>
-        <button type="submit" class="btn btn-custom">Tra Cứu</button>
-    </form>
 
-    {% if result %}
-        <div class="result-box mt-5">
-            <h4>Kết Quả:</h4>
+
+            <label for="gioi_tinh">🧍 Giới tính:</label>
+            <select name="gioi_tinh" required>
+                <option value="nam" selected>Nam</option>
+                <option value="nu">Nữ</option>
+            </select>
+
+            <label for="lich">📅 Loại lịch:</label>
+            <select name="lich" required>
+                <option value="duong" selected>Dương lịch</option>
+                <option value="am">Âm lịch</option>
+            </select>
+
+            <button type="submit">Tra cứu</button>
+        </form>
+
+        {% if result %}
             {% if result.error %}
-                <p class="text-danger">Lỗi: {{ result.error }}</p>
+                <div class="error">{{ result.error }}</div>
             {% else %}
-                <p><strong>Số Điện Thoại:</strong> {{ result.sdt }}</p>
-                <p><strong>Ngày Dương Lịch:</strong> {{ result.ngay_duong }}</p>
-                <p><strong>Ngày Âm Lịch:</strong> {{ result.ngay_am }}</p>
-                <p><strong>Can Chi Năm Sinh:</strong> {{ result.can_chi }}</p>
-                <p><strong>Quái Mệnh:</strong> {{ result.quai_menh }}</p>
+                <div class="result">
+                    <p><strong>SĐT:</strong> {{ result.sdt }}</p>
+                    <p><strong>Ngày dương:</strong> {{ result.ngay_duong }}</p>
+                    <p><strong>Ngày âm:</strong> {{ result.ngay_am }}</p>
+                    <p><strong>Can Chi:</strong> {{ result.can_chi }}</p>
+                    <p><strong>Quái mệnh:</strong> {{ result.quai_menh }}</p>
+                </div>
             {% endif %}
-        </div>
-    {% endif %}
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+        {% endif %}
+    </div>
 </body>
 </html>
