@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-import convertdate
+from lunar_python import Solar, Lunar
 
 app = Flask(__name__)
 
@@ -27,41 +27,49 @@ def tinh_quai_menh(nam_am, gioi_tinh):
         6: "KHẢM", 7: "KHÔN", 8: "CHẤN", 9: "TỐN", 0: "TỐN"
     }
 
-    if gioi_tinh.lower() == 'nam':
+    if gioi_tinh == 'nam':
         return bang_nam.get(so_du)
     else:
         return bang_nu.get(so_du)
 
-@app.route('/', methods=['GET', 'POST'])
-def home():
-    if request.method == 'POST':
+@app.route("/", methods=["GET", "POST"])
+def index():
+    result = None
+    if request.method == "POST":
         try:
-            ngay = int(request.form['ngay'])
-            thang = int(request.form['thang'])
-            nam = int(request.form['nam'])
-            gioi_tinh = request.form['gioi_tinh']
-            loai_lich = request.form['loai_lich']
+            sdt = request.form["sdt"]
+            ngay = int(request.form["ngay"])
+            thang = int(request.form["thang"])
+            nam = int(request.form["nam"])
+            gioi_tinh = request.form["gioi_tinh"]
+            loai_lich = request.form["lich"]
 
             if loai_lich == "duong":
-                am = convertdate.lunardate.from_gregorian(nam, thang, ngay)
-                nam_am = am[0]
+                # Dương lịch -> Âm lịch
+                solar = Solar(nam, thang, ngay, 0, 0, 0)
+                lunar = solar.getLunar()
+                nam_am = lunar.getYear()
                 ngay_duong = f"{ngay:02d}/{thang:02d}/{nam}"
-                ngay_am = f"{am[2]:02d}/{am[1]:02d}/{am[0]}"
+                ngay_am = f"{lunar.getDay():02d}/{lunar.getMonth():02d}/{lunar.getYear()}"
             else:
+                # Âm lịch -> Dương lịch
+                lunar = Lunar(nam, thang, ngay, 0, 0, 0)
+                solar = lunar.getSolar()
                 nam_am = nam
                 ngay_am = f"{ngay:02d}/{thang:02d}/{nam}"
-                am = convertdate.lunardate.to_gregorian(nam, thang, ngay)
-                ngay_duong = f"{am[2]:02d}/{am[1]:02d}/{am[0]}"
+                ngay_duong = f"{solar.getDay():02d}/{solar.getMonth():02d}/{solar.getYear()}"
 
-            can_chi = tinh_can_chi_nam(nam_am)
-            quai = tinh_quai_menh(nam_am, gioi_tinh)
-
-            return render_template('result.html', ngay_duong=ngay_duong, ngay_am=ngay_am, quai=quai, can_chi=can_chi)
-
+            result = {
+                "sdt": sdt,
+                "ngay_duong": ngay_duong,
+                "ngay_am": ngay_am,
+                "can_chi": tinh_can_chi_nam(nam_am),
+                "quai_menh": tinh_quai_menh(nam_am, gioi_tinh)
+            }
         except Exception as e:
-            return render_template('index.html', error=str(e))
+            result = {"error": str(e)}
 
-    return render_template('index.html')
+    return render_template("index.html", result=result)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)

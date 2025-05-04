@@ -3,33 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tra Cứu Can Chi</title>
+    <title>Tra Cứu Can Chi và Quái Mệnh</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            max-width: 600px;
+        }
+        .header {
+            text-align: center;
+            margin-top: 20px;
+            color: #c00;
+        }
+        .result-box {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .btn-custom {
+            background-color: #c00;
+            color: white;
+        }
+    </style>
 </head>
 <body>
-    <h1>Tra Cứu</h1>
+
+<div class="container">
+    <div class="header">
+        <h2>Tra Cứu Can Chi và Quái Mệnh</h2>
+    </div>
+
     <form method="POST">
-        <label for="ngay">Ngày:</label>
-        <input type="number" name="ngay" required><br><br>
-
-        <label for="thang">Tháng:</label>
-        <input type="number" name="thang" required><br><br>
-
-        <label for="nam">Năm:</label>
-        <input type="number" name="nam" required><br><br>
-
-        <label for="gioi_tinh">Giới tính:</label>
-        <input type="radio" name="gioi_tinh" value="nam" required> Nam
-        <input type="radio" name="gioi_tinh" value="nu" required> Nữ<br><br>
-
-        <label for="loai_lich">Loại lịch:</label>
-        <input type="radio" name="loai_lich" value="duong" required> Dương lịch
-        <input type="radio" name="loai_lich" value="am" required> Âm lịch<br><br>
-
-        <button type="submit">Tra Cứu</button>
+        <div class="mb-3">
+            <label for="sdt" class="form-label">Số Điện Thoại</label>
+            <input type="text" class="form-control" id="sdt" name="sdt" required>
+        </div>
+        <div class="mb-3">
+            <label for="ngay" class="form-label">Ngày Sinh</label>
+            <input type="number" class="form-control" id="ngay" name="ngay" min="1" max="31" required>
+        </div>
+        <div class="mb-3">
+            <label for="thang" class="form-label">Tháng Sinh</label>
+            <input type="number" class="form-control" id="thang" name="thang" min="1" max="12" required>
+        </div>
+        <div class="mb-3">
+            <label for="nam" class="form-label">Năm Sinh</label>
+            <input type="number" class="form-control" id="nam" name="nam" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Giới Tính</label>
+            <div>
+                <input type="radio" id="nam" name="gioi_tinh" value="nam" checked> Nam
+                <input type="radio" id="nu" name="gioi_tinh" value="nu"> Nữ
+            </div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Loại Lịch</label>
+            <div>
+                <input type="radio" id="duong" name="lich" value="duong" checked> Dương Lịch
+                <input type="radio" id="am" name="lich" value="am"> Âm Lịch
+            </div>
+        </div>
+        <button type="submit" class="btn btn-custom">Tra Cứu</button>
     </form>
 
-    {% if error %}
-        <p style="color:red;">{{ error }}</p>
+    {% if result %}
+        <div class="result-box mt-5">
+            <h4>Kết Quả:</h4>
+            {% if result.error %}
+                <p class="text-danger">Lỗi: {{ result.error }}</p>
+            {% else %}
+                <p><strong>Số Điện Thoại:</strong> {{ result.sdt }}</p>
+                <p><strong>Ngày Dương Lịch:</strong> {{ result.ngay_duong }}</p>
+                <p><strong>Ngày Âm Lịch:</strong> {{ result.ngay_am }}</p>
+                <p><strong>Can Chi Năm Sinh:</strong> {{ result.can_chi }}</p>
+                <p><strong>Quái Mệnh:</strong> {{ result.quai_menh }}</p>
+            {% endif %}
+        </div>
     {% endif %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
